@@ -3,7 +3,7 @@ const songs = [
         name: "Midnight Drive",
         artist: "Dreamer",
         cover: "https://images.unsplash.com/photo-1511379938547-c1f69419868d?auto=format&fit=crop&w=600&q=80",
-        audio: "songs/song1.mp3"
+        audio: "songs/Armaan_Malik_-_Main_Rahoon_Ya_Na_Rahoon_(mp3.pm).mp3"
     },
 
     {
