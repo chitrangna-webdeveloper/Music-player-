@@ -11,7 +11,7 @@ const songs = [
         name: "Jeena Jeena",
         artist: "Atif Aslam",
         cover: "assests/images (1).jpeg",
-        audio: "songs/jeena-jeena.mp3"
+        audio: "songs/AUD-20260810-WA0003.mp3"
     },
 
     {
