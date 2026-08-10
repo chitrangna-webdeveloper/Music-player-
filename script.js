@@ -3,21 +3,21 @@ const songs = [
         name: "Midnight Drive",
         artist: "Dreamer",
         cover: "https://images.unsplash.com/photo-1511379938547-c1f69419868d?auto=format&fit=crop&w=600&q=80",
-        audio: ""
+        audio: "songs/song1.mp3"
     },
 
     {
         name: "Ocean Eyes",
         artist: "Billie",
         cover: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80",
-        audio: ""
+        audio: "songs/song2.mp3"
     },
 
     {
         name: "Golden Hour",
         artist: "JVKE",
         cover: "https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=600&q=80",
-        audio: ""
+        audio: "songs/song3.mp3"
     }
 ];
 
@@ -25,8 +25,7 @@ const songs = [
 let currentSong = 0;
 let isPlaying = false;
 
-
-/* Elements */
+const audio = new Audio();
 
 const cover = document.getElementById("cover");
 const songName = document.getElementById("song-name");
@@ -39,10 +38,13 @@ const nextButton = document.getElementById("next");
 const progress = document.getElementById("progress");
 const volume = document.getElementById("volume");
 
+const currentTime = document.getElementById("current-time");
+const duration = document.getElementById("duration");
+
 const playlistItems = document.querySelectorAll(".playlist-item");
 
 
-/* Change Song */
+/* Load Song */
 
 function loadSong(index) {
 
@@ -54,6 +56,10 @@ function loadSong(index) {
     artistName.textContent = song.artist;
 
     cover.src = song.cover;
+
+    audio.src = song.audio;
+
+    audio.load();
 
     progress.value = 0;
 
@@ -73,18 +79,28 @@ function loadSong(index) {
 
 playButton.addEventListener("click", () => {
 
-    isPlaying = !isPlaying;
-
     if (isPlaying) {
-        playButton.textContent = "❚❚";
-    } else {
+
+        audio.pause();
+
         playButton.textContent = "▶";
+
+        isPlaying = false;
+
+    } else {
+
+        audio.play();
+
+        playButton.textContent = "❚❚";
+
+        isPlaying = true;
+
     }
 
 });
 
 
-/* Next */
+/* Next Song */
 
 nextButton.addEventListener("click", () => {
 
@@ -96,10 +112,16 @@ nextButton.addEventListener("click", () => {
 
     loadSong(currentSong);
 
+    audio.play();
+
+    playButton.textContent = "❚❚";
+
+    isPlaying = true;
+
 });
 
 
-/* Previous */
+/* Previous Song */
 
 prevButton.addEventListener("click", () => {
 
@@ -111,29 +133,54 @@ prevButton.addEventListener("click", () => {
 
     loadSong(currentSong);
 
-});
+    audio.play();
 
+    playButton.textContent = "❚❚";
 
-/* Playlist Click */
-
-playlistItems.forEach(item => {
-
-    item.addEventListener("click", () => {
-
-        const index = item.getAttribute("data-index");
-
-        loadSong(index);
-
-    });
+    isPlaying = true;
 
 });
 
 
-/* Progress */
+/* Update Progress */
+
+audio.addEventListener("timeupdate", () => {
+
+    if (audio.duration) {
+
+        const progressValue =
+            (audio.currentTime / audio.duration) * 100;
+
+        progress.value = progressValue;
+
+        currentTime.textContent =
+            formatTime(audio.currentTime);
+
+    }
+
+});
+
+
+/* Song Duration */
+
+audio.addEventListener("loadedmetadata", () => {
+
+    duration.textContent =
+        formatTime(audio.duration);
+
+});
+
+
+/* Change Progress */
 
 progress.addEventListener("input", () => {
 
-    console.log("Progress:", progress.value);
+    if (audio.duration) {
+
+        audio.currentTime =
+            (progress.value / 100) * audio.duration;
+
+    }
 
 });
 
@@ -142,11 +189,74 @@ progress.addEventListener("input", () => {
 
 volume.addEventListener("input", () => {
 
-    console.log("Volume:", volume.value);
+    audio.volume = volume.value;
 
 });
 
 
+/* Song End */
+
+audio.addEventListener("ended", () => {
+
+    currentSong++;
+
+    if (currentSong >= songs.length) {
+        currentSong = 0;
+    }
+
+    loadSong(currentSong);
+
+    audio.play();
+
+    playButton.textContent = "❚❚";
+
+    isPlaying = true;
+
+});
+
+
+/* Playlist */
+
+playlistItems.forEach(item => {
+
+    item.addEventListener("click", () => {
+
+        const index =
+            Number(item.getAttribute("data-index"));
+
+        loadSong(index);
+
+        audio.play();
+
+        playButton.textContent = "❚❚";
+
+        isPlaying = true;
+
+    });
+
+});
+
+
+/* Time Format */
+
+function formatTime(time) {
+
+    if (isNaN(time)) {
+        return "0:00";
+    }
+
+    const minutes = Math.floor(time / 60);
+
+    const seconds = Math.floor(time % 60);
+
+    return `${minutes}:${seconds
+        .toString()
+        .padStart(2, "0")}`;
+}
+
+
 /* First Song */
+
+audio.volume = 1;
 
 loadSong(0);
