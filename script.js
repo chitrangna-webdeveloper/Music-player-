@@ -4,7 +4,7 @@ const songs = [
         name: "Main Rahoon Ya Na Rahoon",
         artist: "Armaan Malik",
         cover: "assests/1623410-i-5fe8c00b81e1.jpeg",
-        audio: "songs/Armaan_Malik_-_Main_Rahoon_Ya_Na_Rahoon_(mp3.pm).mp3"
+        audio: "songs/Armaan_Malik_-Main_Rahoon_Ya_Na_Rahoon_(mp3.pm).mp3"
     },
 
     {
@@ -23,26 +23,26 @@ const songs = [
 ];
 
 
-// -----------------------------
+// =============================
 // Variables
-// -----------------------------
+// =============================
 
 let currentSong = 0;
 let isPlaying = false;
 
 
-// -----------------------------
+// =============================
 // Audio
-// -----------------------------
+// =============================
 
 const audio = new Audio();
 
 audio.volume = 1;
 
 
-// -----------------------------
+// =============================
 // HTML Elements
-// -----------------------------
+// =============================
 
 const cover = document.getElementById("cover");
 
@@ -68,9 +68,9 @@ const playlistItems =
     document.querySelectorAll(".playlist-item");
 
 
-// -----------------------------
+// =============================
 // Load Song
-// -----------------------------
+// =============================
 
 function loadSong(index) {
 
@@ -78,16 +78,20 @@ function loadSong(index) {
 
     const song = songs[currentSong];
 
+    // Song information
     songName.textContent = song.name;
 
     artistName.textContent = song.artist;
 
+    // Cover image
     cover.src = song.cover;
 
+    // Audio
     audio.src = song.audio;
 
     audio.load();
 
+    // Reset progress
     progress.value = 0;
 
     currentTime.textContent = "0:00";
@@ -95,32 +99,25 @@ function loadSong(index) {
     duration.textContent = "0:00";
 
 
-    // Active playlist item
-
+    // Update active playlist item
     playlistItems.forEach(item => {
-
         item.classList.remove("active");
-
     });
 
-
     if (playlistItems[currentSong]) {
-
-        playlistItems[currentSong]
-            .classList.add("active");
-
+        playlistItems[currentSong].classList.add("active");
     }
 
-
+    // Reset play button
     isPlaying = false;
 
     playButton.textContent = "▶";
 }
 
 
-// -----------------------------
+// =============================
 // Play Song
-// -----------------------------
+// =============================
 
 function playSong() {
 
@@ -134,19 +131,23 @@ function playSong() {
         })
         .catch(error => {
 
-            console.log(
-                "Audio could not be played:",
-                error
+            console.log("Audio error:", error);
+
+            isPlaying = false;
+
+            playButton.textContent = "▶";
+
+            alert(
+                "Ye song play nahi ho raha. Audio file ka naam aur songs folder ka path check karo."
             );
 
         });
-
 }
 
 
-// -----------------------------
+// =============================
 // Pause Song
-// -----------------------------
+// =============================
 
 function pauseSong() {
 
@@ -155,13 +156,12 @@ function pauseSong() {
     isPlaying = false;
 
     playButton.textContent = "▶";
-
 }
 
 
-// -----------------------------
-// Play / Pause Button
-// -----------------------------
+// =============================
+// Play / Pause
+// =============================
 
 playButton.addEventListener("click", () => {
 
@@ -178,51 +178,45 @@ playButton.addEventListener("click", () => {
 });
 
 
-// -----------------------------
+// =============================
 // Next Song
-// -----------------------------
+// =============================
 
 nextButton.addEventListener("click", () => {
 
     currentSong++;
 
     if (currentSong >= songs.length) {
-
         currentSong = 0;
-
     }
 
     loadSong(currentSong);
 
     playSong();
-
 });
 
 
-// -----------------------------
+// =============================
 // Previous Song
-// -----------------------------
+// =============================
 
 prevButton.addEventListener("click", () => {
 
     currentSong--;
 
     if (currentSong < 0) {
-
         currentSong = songs.length - 1;
-
     }
 
     loadSong(currentSong);
 
     playSong();
-
 });
 
 
-// -----------------------------
+// =============================
 // Playlist
-// -----------------------------
+// =============================
 
 playlistItems.forEach(item => {
 
@@ -231,8 +225,10 @@ playlistItems.forEach(item => {
         const index =
             Number(item.getAttribute("data-index"));
 
+        // Selected song load
         loadSong(index);
 
+        // Selected song play
         playSong();
 
     });
@@ -240,9 +236,9 @@ playlistItems.forEach(item => {
 });
 
 
-// -----------------------------
+// =============================
 // Update Progress
-// -----------------------------
+// =============================
 
 audio.addEventListener("timeupdate", () => {
 
@@ -257,25 +253,27 @@ audio.addEventListener("timeupdate", () => {
 
     currentTime.textContent =
         formatTime(audio.currentTime);
-
 });
 
 
-// -----------------------------
+// =============================
 // Song Duration
-// -----------------------------
+// =============================
 
 audio.addEventListener("loadedmetadata", () => {
 
-    duration.textContent =
-        formatTime(audio.duration);
+    if (!isNaN(audio.duration)) {
 
+        duration.textContent =
+            formatTime(audio.duration);
+
+    }
 });
 
 
-// -----------------------------
+// =============================
 // Change Progress
-// -----------------------------
+// =============================
 
 progress.addEventListener("input", () => {
 
@@ -287,52 +285,60 @@ progress.addEventListener("input", () => {
         (progress.value / 100) * audio.duration;
 
     audio.currentTime = newTime;
-
 });
 
 
-// -----------------------------
-// Volume Control
-// -----------------------------
+// =============================
+// Volume
+// =============================
 
 volume.addEventListener("input", () => {
 
-    audio.volume = volume.value;
+    audio.volume = Number(volume.value);
 
 });
 
 
-// -----------------------------
-// Automatically Play Next Song
-// -----------------------------
+// =============================
+// Song End
+// =============================
 
 audio.addEventListener("ended", () => {
 
     currentSong++;
 
     if (currentSong >= songs.length) {
-
         currentSong = 0;
-
     }
 
     loadSong(currentSong);
 
     playSong();
+});
+
+
+// =============================
+// Audio Error
+// =============================
+
+audio.addEventListener("error", () => {
+
+    console.log(
+        "Audio file not found:",
+        songs[currentSong].audio
+    );
 
 });
 
 
-// -----------------------------
+// =============================
 // Format Time
-// -----------------------------
+// =============================
 
 function formatTime(time) {
 
     if (isNaN(time)) {
-
         return "0:00";
-
     }
 
     const minutes =
@@ -346,13 +352,12 @@ function formatTime(time) {
         ":" +
         seconds.toString().padStart(2, "0")
     );
-
 }
 
 
-// -----------------------------
+// =============================
 // Initial Song
-// -----------------------------
+// =============================
 
 loadSong(0);
 
