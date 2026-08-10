@@ -10,14 +10,14 @@ const songs = [
     {
         name: "Jeena Jeena",
         artist: "Atif Aslam",
-        cover: "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/3a/7c/48/3a7c48f8-4a20-7e2c-5a5a-8b0f3b5f2c6b/cover.jpg/600x600bb.jpg",
+        cover: "assests/images (1).jpeg",
         audio: "songs/jeena-jeena.mp3"
     },
 
     {
         name: "Tere Sang Yaara",
         artist: "Atif Aslam",
-        cover: "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/7a/4b/2d/7a4b2d3e-1d7e-8a2c-5c4e-9b5f2d7a3e1c/cover.jpg/600x600bb.jpg",
+        cover: "assests/",
         audio: "songs/tere-sang-yaara.mp3"
     }
 ];
