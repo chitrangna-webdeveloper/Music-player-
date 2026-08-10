@@ -1,10 +1,10 @@
-```javascript
+
 const songs = [
     {
         name: "Main Rahoon Ya Na Rahoon",
         artist: "Armaan Malik",
         cover: "https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/4f/0e/3b/4f0e3b11-1c7e-5d13-6f87-3e7a4e9a0c5a/cover.jpg/600x600bb.jpg",
-        audio: "songs/main-rahoon-ya-na-rahoon.mp3"
+        audio: "songs/Armaan_Malik_-_Main_Rahoon_Ya_Na_Rahoon_(mp3.pm).mp3"
     },
 
     {
@@ -355,4 +355,4 @@ function formatTime(time) {
 // -----------------------------
 
 loadSong(0);
-```
+
