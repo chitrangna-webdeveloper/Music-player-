@@ -4,8 +4,7 @@ const songs = [
         name: "Main Rahoon Ya Na Rahoon",
         artist: "Armaan Malik",
         cover: "assests/1623410-i-5fe8c00b81e1.jpeg",
-        audio: "songs/Armaan_Malik_-_Main_Rahoon_Ya_Na_Rahoon_(mp3.pm).mp3"
-    },
+        audio: "songs/Armaan_Malik_-_Main_Rahoon_Ya_Na_Rahoon_(mp3.pm).mp3"  },
 
     {
         name: "Jeena Jeena",
