@@ -17,7 +17,7 @@ const songs = [
     {
         name: "Tere Sang Yaara",
         artist: "Atif Aslam",
-        cover: "assests/",
+        cover: "assests/images.jpeg",
         audio: "songs/tere-sang-yaara.mp3"
     }
 ];
