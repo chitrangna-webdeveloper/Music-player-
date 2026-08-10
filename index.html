@@ -1,1 +1,120 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Music Player | Chitrangna</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="music-player">
+
+        <!-- Header -->
+        <div class="player-header">
+            <span>MY MUSIC</span>
+            <span class="dot"></span>
+        </div>
+
+        <!-- Cover -->
+        <div class="cover-container">
+            <img id="cover" src="https://images.unsplash.com/photo-1511379938547-c1f69419868d?auto=format&fit=crop&w=600&q=80" alt="Song Cover">
+        </div>
+
+        <!-- Song Info -->
+        <div class="song-info">
+            <h2 id="song-name">Midnight Drive</h2>
+            <p id="artist-name">Dreamer</p>
+        </div>
+
+        <!-- Progress -->
+        <div class="progress-section">
+
+            <span id="current-time">0:00</span>
+
+            <input 
+                type="range" 
+                id="progress" 
+                value="0" 
+                min="0" 
+                max="100"
+            >
+
+            <span id="duration">0:00</span>
+
+        </div>
+
+        <!-- Controls -->
+        <div class="controls">
+
+            <button id="prev">
+                ⏮
+            </button>
+
+            <button id="play" class="play-btn">
+                ▶
+            </button>
+
+            <button id="next">
+                ⏭
+            </button>
+
+        </div>
+
+        <!-- Volume -->
+        <div class="volume-section">
+
+            <span>🔊</span>
+
+            <input 
+                type="range" 
+                id="volume" 
+                min="0" 
+                max="1" 
+                step="0.01" 
+                value="1"
+            >
+
+        </div>
+
+        <!-- Playlist -->
+        <div class="playlist">
+
+            <h3>Playlist</h3>
+
+            <div class="playlist-item active" data-index="0">
+                <div>
+                    <strong>Midnight Drive</strong>
+                    <small>Dreamer</small>
+                </div>
+                <span>01</span>
+            </div>
+
+            <div class="playlist-item" data-index="1">
+                <div>
+                    <strong>Ocean Eyes</strong>
+                    <small>Billie</small>
+                </div>
+                <span>02</span>
+            </div>
+
+            <div class="playlist-item" data-index="2">
+                <div>
+                    <strong>Golden Hour</strong>
+                    <small>JVKE</small>
+                </div>
+                <span>03</span>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
