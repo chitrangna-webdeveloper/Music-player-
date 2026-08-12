@@ -17,7 +17,7 @@ const songs = [
         name: "Tere Sang Yaara",
         artist: "Atif Aslam",
         cover: "assests/images.jpeg",
-        audio: "songs/tere-sang-yaara.mp3"
+        audio: "songs/ll-best-mobile-ringtone-ll-tere-sang-yaara-instrumental-ringtone-ll-rustom-ll-akshaykumar1553713782.mp3"
     }
 ];
 
